@@ -46,8 +46,6 @@ class App extends Component{
             Clarify.FACE_DETECT_MODEL,
             this.state.input)
             .then(response => {
-                //console.log(response);
-                //this.calculateFaceLocation(response)
                 this.displayFaceBox(this.calculateFaceLocation(response))
             })
             .catch((err)=>{
@@ -57,18 +55,12 @@ class App extends Component{
     };
 
     calculateFaceLocation = (data) =>{
-        const clarifyFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-        //console.log(clarifyFace);
+        //const clarifyFace = data.outputs[0].data.regions[0].region_info.bounding_box;
         const clarifyFaces = data.outputs[0].data.regions;
-        //console.log(clarifyFaces)
         const faceItem = document.querySelector('#inputImage');
         const width = Number(faceItem.width);
         const height = Number(faceItem.height);
-
-        const drawnRegions = clarifyFaces.map(face => {
-            return face.region_info.bounding_box
-        });
-
+        const drawnRegions = clarifyFaces.map(face => face.region_info.bounding_box);
         const finalDrawings = drawnRegions.map(faceMain => {
             return {
                 leftCol : faceMain.left_col*width,
@@ -77,20 +69,11 @@ class App extends Component{
                 bottomRow: height - (faceMain.bottom_row * height)
             }
         });
-
         return finalDrawings
-
-        /*return {
-            leftCol : clarifyFace.left_col*width,
-            topRow:clarifyFace.top_row *height,
-            rightCol: width - (clarifyFace.right_col*width),
-            bottomRow: height - (clarifyFace.bottom_row * height)
-        }*/
 
     };
 
     displayFaceBox =(box)=>{
-        //console.log(box);
         this.setState({box:box});
     };
 
