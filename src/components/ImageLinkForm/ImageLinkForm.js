@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ImageLinkForm = ({onInputChange, onSubmit}) => {
+const ImageLinkForm = ({onInputChange, onSubmit}) =>{
     return(
         <div className=''>
             <p className='f5'>
